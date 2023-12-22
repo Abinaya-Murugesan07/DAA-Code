@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+
+std::vector<int> sieveOfSundaram(int n) {
+    int nNew = (n - 2) / 2;
+    std::vector<bool> marked(nNew + 1, false);
+
+    for (int i = 1; i <= nNew; ++i)
+        for (int j = i; (i + j + 2 * i * j) <= nNew; ++j)
+            marked[i + j + 2 * i * j] = true;
+
+    std::vector<int> result;
+    if (n > 2)
+        result.push_back(2);
+
+    for (int i = 1; i <= nNew; ++i)
+        if (!marked[i])
+            result.push_back(2 * i + 1);
+
+    return result;
+}
+
+int main() {
+    int n;
+
+    std::cout << "Enter the value of n: ";
+    std::cin >> n;
+
+    std::vector<int> primes = sieveOfSundaram(n);
+
+    std::cout << "Prime numbers up to " << n << ": ";
+    for (int prime : primes)
+        std::cout << prime << " ";
+
+    return 0;
+}
